@@ -1,0 +1,48 @@
+{
+  "manifest_version": "0.3",
+  "name": "akadock",
+  "display_name": "AKADock",
+  "version": "1.1.0",
+  "description": "Run molecular docking on this computer with AutoDock Vina, and get results that carry their own validation verdict.",
+  "long_description": "AKADock docks compounds into a protein with AutoDock Vina on your own machine. Give Claude a PDB code and a list of compounds and it loads the structure, docks them, and reads the ranked results back: affinity, ligand efficiency and the residues each pose touches.\n\nEvery run first redocks the ligand that came with the crystal structure and reports PASS, WARN or FAIL. That verdict travels with the numbers, and Claude is told not to rank compounds from a run that failed its own self-check.\n\nAKADock 1.1 or newer must be installed on this computer. Nothing is uploaded: the docking happens locally and the runs stay in your AKADock workspace folder.",
+  "author": {
+    "name": "Amr Alani",
+    "url": "https://github.com/amr-alani/akadock"
+  },
+  "homepage": "https://amr-alani.github.io/akadock/",
+  "documentation": "https://github.com/amr-alani/akadock#using-akadock-from-claude-mcp",
+  "support": "https://github.com/amr-alani/akadock/issues",
+  "icon": "icon.png",
+  "license": "GPL-2.0",
+  "keywords": ["docking", "chemistry", "autodock-vina", "drug-discovery", "science"],
+  "server": {
+    "type": "python",
+    "entry_point": "server/akadock_mcp.py",
+    "mcp_config": {
+      "command": "${user_config.akadock_folder}/python/python.exe",
+      "args": ["${__dirname}/server/akadock_mcp.py"],
+      "env": {
+        "AKADOCK_HOME": "${user_config.akadock_folder}"
+      }
+    }
+  },
+  "user_config": {
+    "akadock_folder": {
+      "type": "directory",
+      "title": "AKADock folder",
+      "description": "Where AKADock is installed. The default is where the installer puts it; change this if you moved it or use the portable version.",
+      "required": true,
+      "default": "${HOME}/AppData/Local/Programs/AKADock"
+    }
+  },
+  "tools": [
+    {"name": "akadock_load_protein", "description": "Download a protein by PDB ID and list the ligands bound in it."},
+    {"name": "akadock_dock", "description": "Start a docking run and return a job id."},
+    {"name": "akadock_status", "description": "Progress of a run, and the validation verdict."},
+    {"name": "akadock_results", "description": "The ranked results, verdict first."},
+    {"name": "akadock_files", "description": "Where the report, spreadsheet and pose files are."}
+  ],
+  "compatibility": {
+    "platforms": ["win32"]
+  }
+}

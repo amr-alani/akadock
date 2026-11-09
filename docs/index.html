@@ -359,9 +359,12 @@ footer p{font-size:14.5px;margin:0 0 10px}
       <p class="lead">AKADock ships an MCP server, so Claude Desktop and Claude Code can drive it:
         load a protein, dock a list of compounds, read the ranked results back — all on your own
         machine, with nothing uploaded.</p>
-      <p>One command registers it: <span class="mono">python mcp\install_mcp.py</span>. The engine
-        starts itself, and a run you ask for in words appears under <b>Previous runs</b> like any
-        other.</p>
+      <p><b>Double-click the connector file.</b> Claude Desktop shows what it does, asks which folder
+        AKADock is in — the usual one is filled in already — and installs it. Nothing to type, nothing
+        to edit. The engine starts itself, and a run you ask for in words appears under
+        <b>Previous runs</b> like any other.</p>
+      <p class="cta" style="margin:0 0 18px"><a class="btn ghost" href="https://github.com/amr-alani/akadock/releases/download/v1.1/AKADock-1.1-connector.mcpb">Download the connector <small>.mcpb · 61 KB</small></a></p>
+      <p class="mono" style="font-size:12.5px;color:var(--ink2)">Claude Code: run <span style="color:var(--ink)">python mcp\install_mcp.py</span> and use the line it prints.</p>
       <div class="stamp" style="border-color:var(--blue);color:var(--blue);background:var(--blue-soft);transform:rotate(1deg)">
         <b style="letter-spacing:.06em;font-size:15px">THE VERDICT TRAVELS WITH THE NUMBERS</b>
         Every result handed to Claude carries the redocking verdict and a trust flag, and the tool

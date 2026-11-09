@@ -24,7 +24,9 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+# Inside a Claude Desktop bundle this file sits outside the AKADock folder, so the installer
+# passes the real one in AKADOCK_HOME.
+ROOT = Path(os.environ.get("AKADOCK_HOME") or Path(__file__).resolve().parent.parent)
 BASE = os.environ.get("AKADOCK_URL", "http://127.0.0.1:8801").rstrip("/")
 VERSION = "1.1"
 PROTOCOL = "2025-06-18"

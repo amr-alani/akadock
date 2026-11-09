@@ -221,15 +221,18 @@ On a 4-core machine (1EVE and 1ACJ are Torpedo californica AChE):
 
 ## Using AKADock from Claude (MCP)
 
-`mcp/akadock_mcp.py` makes AKADock available to Claude Desktop and Claude Code as an MCP server, so
-you can ask for a docking run in words and get real numbers back from your own machine. Register it
-once:
+AKADock can be used from Claude Desktop and Claude Code, so you can ask for a docking run in words
+and get real numbers back from your own machine.
 
-```bash
-python mcp\install_mcp.py          # Claude Desktop; --remove undoes it
-```
+**Claude Desktop:** double-click **AKADock-1.1-connector.mcpb** (on the download page, or build it
+yourself with `python mcp\build_bundle.py`). Claude Desktop shows what the connector does, asks which
+folder AKADock is in - the usual one is filled in already - and installs it. Nothing to type, nothing
+to edit.
 
-and restart Claude Desktop. The command it prints does the same for Claude Code. The server starts
+**Claude Code:** run `python mcp\install_mcp.py` and use the command it prints. That script also
+registers the server with Claude Desktop by hand if you prefer it to the bundle; `--remove` undoes it.
+
+The server starts
 the engine itself if it is not already running, and talks to the same `127.0.0.1:8801` API as the
 window, so a run started from Claude appears under **Previous runs** like any other.
 
@@ -288,6 +291,7 @@ app/server.py           FastAPI endpoints
 app/static/             the browser UI
 shell/                  the C# app window (AKADock.exe) and its build script
 mcp/akadock_mcp.py      the MCP server (AKADock as a tool for Claude)
+mcp/build_bundle.py     packs the Claude Desktop connector (.mcpb)
 scripts/selfcheck_metal.py     checks the metal-in-box warning (needs internet)
 scripts/selfcheck_warheads.py  checks the covalent warhead detection
 benchmarks/             the validation runs in "Tested": result tables + the scripts that made them
