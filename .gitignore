@@ -1,0 +1,9 @@
+﻿workspace/
+__pycache__/
+*.pyc
+.venv/
+app/static/vendor/
+bin/
+*.zip
+AKADock-Setup.exe
+AKADock.exe

@@ -1,0 +1,17 @@
+﻿paper,doi,pdb,target,status,box,dockpilot_rmsd,dockpilot_score,exhaustiveness,job,ligands_available,note,reported_rmsd,reported_score,rmsd_diff,score_diff,seconds,smiles_rmsd,smiles_score,used_ligand,verdict,want_ligand
+PMC13610358,10.3390/pharmaceutics18091050,3KK6,COX-1 / celecoxib,done,"[20.0, 20.0, 20.5]",0.76,-10.63,32,20261017-214646-7fc3,"BOG,CEL,FLC,HEM",,1.41,-8.1,-0.65,-2.53,159,0.83,-10.61,CEL:A:701,pass,CEL
+PMC13610358,10.3390/pharmaceutics18091050,5KIR,COX-2 / rofecoxib,done,"[20.0, 20.0, 20.0]",0.89,-10.19,32,20261017-214927-0451,"COH,RCX",,1.34,-10.4,-0.45,0.21,490,0.93,-10.2,RCX:A:601,pass,RCX
+PMC13510811,10.3390/cimb48080807,1E7U,PI3K / KWT,done,"[20.0, 20.0, 20.0]",1.36,-9.12,32,20261017-215737-600b,KWT,,0.239,-8.4,1.12,-0.72,97,1.1,-9.02,KWT:A:1833,pass,KWT
+PMC13510811,10.3390/cimb48080807,3RZF,NF-kB IKK / XNM,done,"[20.0, 23.9, 20.0]",7.05,-8.86,32,20261017-215917-be8f,XNM,,0.478,-8.3,6.57,-0.56,556,7.02,-8.34,XNM:A:676,fail,XNM
+PMC13510811,10.3390/cimb48080807,4JT6,mTOR / X6K,done,"[20.5, 20.0, 20.0]",4.89,-9.76,32,20261017-220835-e6af,X6K,,0.162,-8.1,4.73,-1.66,73,7.24,-9.76,X6K:B:2601,warn,X6K
+PMC13552277,10.5812/ijpr-170515,2Z7G,ADA / EHNA (paper exh 100),done,"[20.0, 20.0, 20.0]",2.05,-7.35,64,20261017-220950-8e92,EH9,ligand EHN not found; used largest (EH9),,-6.8,,-0.55,215,2.54,-7.12,EH9:A:356,fail,EHN
+PMC13552277,10.5812/ijpr-170515,2PGR,ADA / pentostatin (paper exh 100),done,"[20.0, 20.0, 20.0]",0.34,-7.46,64,20261017-221327-1606,"DCF,MSE",,,-6.3,,-1.16,339,0.8,-5.5,DCF:A:501,pass,DCF
+PMC13524263,10.1371/journal.pone.0355997,6CM4,D2R / risperidone,done,"[20.0, 20.0, 24.8]",2.36,-12.26,16,20261017-221907-d846,"8NU,OLA",ligand 9KZ not found; used largest (8NU),0.458,,1.9,,70,0.66,-11.42,8NU:A:2001,warn,9KZ
+PMC13524263,10.1371/journal.pone.0355997,6A93,5-HT2A / risperidone,done,"[26.1, 20.0, 20.0]",10.67,-11.27,16,20261017-222019-d19b,"8NU,CLR,PLM",,0.48,,10.19,,211,10.66,-11.52,8NU:A:3001,warn,8NU
+PMC13396737,10.1038/s41598-026-56505-6,3GB2,GSK-3beta / native ligand,done,"[20.9, 20.0, 20.0]",1.43,-9.45,32,20261017-222351-9745,"G3B,PTR",,1.45,-6.8,-0.02,-2.65,62,1.24,-9.49,G3B:A:999,pass,(largest)
+PMC13366417,10.3389/fchem.2026.1859262,7ALV,NLRP3 / RM5,done,"[20.0, 20.4, 20.0]",0.71,-9.47,32,20261017-222455-da1c,"ADP,RM5",,0.87,-9.6,-0.16,0.13,199,0.74,-9.2,RM5:A:701,pass,RM5
+PMC13515186,10.3390/molecules31162837,4MBS,CCR5 / maraviroc,done,"[21.8, 21.0, 20.0]",0.31,-12.16,32,20261017-222816-21e9,"MRV,OLC",ligand 3MV not found; used largest (MRV),0.209,-10.8,0.1,-1.36,308,0.45,-11.9,MRV:A:1101,pass,3MV
+PMC13453077,10.1002/cbdv.71569,6C6P,squalene monooxygenase / NB-598,done,"[21.8, 25.6, 20.0]",0.67,-11.44,32,20261017-223325-bac6,"CPS,EMV,FAD","corrected: redocked EMV (NB-598), the ligand the paper used, not the FAD cofactor",0.55,,0.12,,1571,0.65,-13.1,EMV:A:604,pass,(largest)
+PMC13453077,10.1002/cbdv.71569,4WMZ,lanosterol 14a-demethylase / fluconazole,done,"[20.0, 20.0, 20.0]",5.23,-7.04,32,20261017-225940-5e5b,"HEM,TPF",,1.54,,3.69,,168,5.48,-6.95,TPF:A:602,fail,TPF
+PMC13338215,10.1038/s41598-026-00000,5XGI,PI3K alpha / native ligand,done,"[20.0, 20.0, 20.6]",1.77,-8.37,32,20261017-230229-bfb8,84R,,1.7,,0.07,,163,6.78,-7.72,84R:A:1101,pass,(largest)
+PMC13616462,10.1002/cbdv.71742,5TZ1,CYP51 template structure,done,"[20.0, 23.5, 22.8]",2.36,-10.58,16,20261017-230513-29c4,"HEM,VT1",,,,,,296,3.98,-10.49,VT1:A:602,fail,(largest)

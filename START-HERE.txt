@@ -1,0 +1,14 @@
+AKADock for Windows
+=====================
+
+1. Unzip this whole folder somewhere you can write to (for example Documents\AKADock).
+   Do not run it from inside the zip.
+2. Double-click AKADock.exe. AKADock opens in its own window, filling the screen.
+   F11 = full screen, Esc = back. Closing the window stops AKADock.
+3. Windows may warn that the app is from an unknown publisher (it is not code-signed).
+   Click "More info", then "Run anyway".
+
+Your runs and saved proteins are kept in the "workspace" folder next to AKADock.exe.
+Nothing needs to be installed: Python, AutoDock Vina and every library are inside this folder.
+The window uses the Microsoft Edge WebView2 Runtime, which is part of Windows 10 and 11.
+Fetching a structure by PDB ID needs internet; everything else works offline.

@@ -1,0 +1,60 @@
+AKADock — terms of use
+
+Please read this before installing.
+
+1. WHAT AKADOCK IS
+
+AKADock is a desktop application for molecular docking. It predicts how small
+molecules might bind to a protein, using AutoDock Vina. It runs entirely on this
+computer. Your structures and compounds are not uploaded anywhere.
+
+2. WHAT IT IS NOT — PLEASE READ
+
+Docking scores are estimates, not measurements. They are not proof that a
+compound binds, and they are not proof that it is active, safe or effective.
+
+AKADock must not be used as the basis of a medical, clinical or diagnostic
+decision. It is a research tool. Results need to be confirmed by laboratory
+experiments before they mean anything.
+
+The software is provided "as is", without warranty of any kind. The authors
+accept no liability for any loss or damage arising from its use.
+
+3. OPEN-SOURCE SOFTWARE INCLUDED
+
+AKADock bundles the following free and open-source software, each under its
+own licence. Installing AKADock installs these as well.
+
+  AutoDock Vina 1.2.5     Apache License 2.0      docking engine
+  RDKit                   BSD 3-Clause            chemistry toolkit
+  Open Babel              GPL v2                  file conversion, protonation
+  Meeko                   LGPL v2.1               ligand and receptor preparation
+  Gemmi                   MPL v2                  structure file reading
+  PLIP                    GPL v2                  interaction analysis
+  NumPy                   BSD 3-Clause            numerical computing
+  FastAPI / Starlette     MIT                     local web server
+  uvicorn                 BSD 3-Clause            local web server
+  Ketcher                 Apache License 2.0      chemical drawing editor
+  Mol*                    MIT                     3D structure viewer
+  Python 3.12             PSF License             runtime
+
+Because Open Babel and PLIP are licensed under the GPL v2, the combined
+installation is distributed under the terms of the GPL v2. You may copy and
+redistribute it under those terms. The source code of each component is
+available from its own project website.
+
+4. DATA FROM THE INTERNET
+
+AKADock can download protein structures from the RCSB Protein Data Bank and
+compound sets from ChEMBL when you ask it to. Both are public scientific
+databases. This happens only when you use those features. Everything else works
+without an internet connection.
+
+This installer may also download the Microsoft WebView2 Runtime from Microsoft
+if your computer does not already have it. The application window needs it.
+
+5. ACCEPTANCE
+
+By installing AKADock you confirm that you have read and accepted these terms,
+and that you understand the results are predictions requiring experimental
+confirmation.

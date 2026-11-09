@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AKADock</title>
+<link rel="stylesheet" href="vendor/molstar/molstar.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand" title="AKADock - Automated Kit for AutoDock"><span class="logo">◆</span> AKADock <span class="ver">v1.1</span></div>
+  <div class="top-actions">
+    <select id="history" title="Open a run you did before."><option value="">Previous runs…</option></select>
+    <span id="health" class="health"></span>
+  </div>
+</header>
+
+<main class="layout">
+  <aside class="setup">
+    <!-- Step 1 -->
+    <section class="card" id="step-protein">
+      <h2><span class="num">1</span> Protein</h2>
+      <p class="step-help">Choose the protein and the pocket to dock into. Hover any control for an explanation.</p>
+      <div class="row">
+        <input id="pdb-id" placeholder="PDB ID, e.g. 4EY7" maxlength="4" autocomplete="off" spellcheck="false" title="Type the 4-character code of a structure in the Protein Data Bank, for example 4EY7. The file is downloaded for you.">
+        <button id="btn-fetch" class="primary" title="Download this structure from the Protein Data Bank and show its bound ligands.">Load</button>
+      </div>
+      <div class="or">or <label class="link">upload a .pdb / .cif / .mol2 file<input type="file" id="pdb-file" accept=".pdb,.ent,.cif,.mmcif,.mol2" hidden title="Use your own structure file instead of downloading one: .pdb, .cif or .mol2."></label></div>
+      <div class="row library">
+        <select id="library" title="A protein you loaded before. Choosing it skips the download."><option value="">Saved proteins…</option></select>
+        <button id="btn-lib-del" title="Remove the selected protein from the library" disabled>Remove</button>
+      </div>
+      <div id="protein-info" class="hidden">
+        <div id="protein-title" class="muted small"></div>
+        <label class="field">Co-crystallized ligand (defines the binding site)
+          <select id="ligand-select" title="The molecule already bound in the structure. It marks where the pocket is, and lets the app check itself by redocking it. Choose None if you want to define the site by residues."></select>
+        </label>
+        <div id="site-box" class="hidden">
+          <label class="field">Binding-site residues (the box is placed around them)
+            <div class="row"><input id="site-res" placeholder="e.g. Trp86 Tyr124 Trp286 Tyr337 Phe338" spellcheck="false" title="Type the residues lining the pocket, for example Trp86 Tyr337. One-letter codes (W86) and chains (B:W86) also work."><button id="btn-site" title="Show the box these residues produce, before running.">Show</button></div>
+          </label>
+          <div id="site-msg" class="msg"></div>
+        </div>
+      </div>
+      <div id="protein-msg" class="msg"></div>
+    </section>
+
+    <!-- Step 2 -->
+    <section class="card" id="step-compounds">
+      <h2><span class="num">2</span> Compounds <span id="cmp-count" class="badge">0</span></h2>
+      <p class="step-help">Add the compounds to test: draw them, paste SMILES, upload a file, or download a library.</p>
+      <div class="row">
+        <button id="btn-draw" class="primary" title="Draw a compound with the mouse in a chemical editor.">Draw a compound</button>
+        <button id="btn-paste" title="Paste compounds as SMILES text, one per line, with an optional name first.">Paste SMILES</button>
+        <label class="button" title="SDF or MOL2 from PubChem, ChEMBL or a vendor, or a .smi list">Upload file<input type="file" id="cmp-file" accept=".sdf,.sd,.mol,.mol2,.smi,.txt,.csv" hidden></label>
+        <button id="btn-lib-fetch" title="Download compounds measured against a target from ChEMBL">Fetch a library</button>
+      </div>
+      <div id="lib-box" class="hidden">
+        <label class="field">Target name
+          <input id="lib-query" placeholder="e.g. acetylcholinesterase, or a ChEMBL id like CHEMBL220" title="The protein you want compounds for. A name like acetylcholinesterase, or a ChEMBL id like CHEMBL220.">
+        </label>
+        <div class="row">
+          <button id="btn-lib-search" class="primary" title="Search ChEMBL for targets with this name. You then pick the right species.">Search ChEMBL</button>
+          <label class="field inline">How many <input id="lib-limit" type="number" min="1" max="500" value="100" title="How many compounds to download. They come strongest-measured first."></label>
+        </div>
+        <select id="lib-targets" class="hidden" size="6" title="Pick the target that matches your protein, including the right species. The compounds download as soon as you choose."></select>
+        <div id="lib-msg" class="msg"></div>
+      </div>
+      <div id="paste-box" class="hidden">
+        <textarea id="paste-text" rows="5" title="One compound per line. Write the name first and then its SMILES, or just the SMILES on its own." placeholder="One per line:  name  SMILES   (or just SMILES)&#10;galantamine  COc1ccc2c3c1O[C@H]1C[C@@H](O)C=C[C@@]31CCN(C)C2&#10;tacrine  Nc1c2c(nc3ccccc13)CCCC2"></textarea>
+        <div class="row"><button id="btn-paste-add" class="primary" title="Add the pasted compounds to the list.">Add</button><button id="btn-example" title="Load five known acetylcholinesterase inhibitors, to try the app quickly.">Load AChE examples</button></div>
+      </div>
+      <ul id="compound-list" class="compounds"></ul>
+      <div id="compound-msg" class="msg"></div>
+    </section>
+
+    <!-- Step 3 -->
+    <section class="card" id="step-run">
+      <h2><span class="num">3</span> Run</h2>
+      <p class="step-help">Settings are optional — the defaults work. Each one explains itself when you hover it.</p>
+      <details>
+        <summary>Settings</summary>
+        <label class="field inline">Exhaustiveness <input id="set-exh" type="number" min="1" max="64" value="8" title="How hard Vina searches for the best pose. 8 is the Vina default. Higher is more thorough but slower; the result stops improving after about 32."></label>
+        <label class="field inline">Box padding (Å) <input id="set-pad" type="number" min="2" max="30" step="1" value="10" title="How much space to leave around the reference ligand when building the search box, in angstroms."></label>
+        <label class="field inline">Poses per compound <input id="set-modes" type="number" min="1" max="20" value="9" title="How many different poses to keep for each compound."></label>
+        <label class="check"><input id="set-redock" type="checkbox" checked title="Check the setup first by docking the known ligand back into the pocket and comparing with the crystal structure. This tells you whether to trust the ranking."> Validate by redocking the co-crystallized ligand</label>
+        <label class="check"><input id="set-ref" type="checkbox" checked title="Also dock the original ligand the same way as your compounds (built from SMILES), so you can compare like with like."> Also dock the co-crystallized ligand from its SMILES, ranked with the compounds</label>
+        <label class="check"><input id="set-prot" type="checkbox" title="Adjust the compounds to the charges they would have at pH 7.4. Off by default because it can be wrong for unusual chemistry."> Protonate compounds at pH 7.4</label>
+        <label class="check"><input id="set-waters" type="checkbox" title="Keep the crystal water molecules that sit within 3.5 angstroms of the reference ligand, as a fixed part of the protein. Some pockets need a bridging water."> Keep crystal waters near the ligand (advanced)</label>
+        <label class="field inline">Time limit per compound (minutes) <input id="set-timeout" type="number" min="0.5" max="180" step="0.5" value="10" title="Give up on a single compound after this many minutes. Stops one very flexible molecule from blocking a whole screening run."></label>
+        <label class="field">Covalent inhibitor: residue it should bond to (advanced)
+          <input id="set-covalent" placeholder="e.g. Cys145 — leave empty if your compounds are not covalent" title="For covalent inhibitors: the residue your compounds should bond to, for example Cys145. Leave empty for normal compounds.">
+        </label>
+        <p class="muted small">For covalent inhibitors. Vina cannot form bonds, so the compound is docked
+          normally and AKADock then measures how close its reactive group (acrylamide, nitrile, epoxide
+          and so on) gets to that residue. Under about 4 Å the bond could form; much further means the
+          pose is not compatible with covalent binding.</p>
+        <label class="field">Flexible side chains (advanced)
+          <input id="set-flex" placeholder="e.g. Tyr337 Phe338 — leave empty for a rigid protein" title="Let these side chains rotate while docking, for induced fit. Use 3 or 4 pocket residues at most: more is slower and less reliable.">
+        </label>
+        <p class="muted small">Exhaustiveness 8 is the Vina default. Higher values search more thoroughly but take longer.</p>
+        <p class="muted small">Flexible side chains let those residues rotate while docking, which models induced fit.
+          Use 3 or 4 pocket residues at most: each one makes the run slower and the scores are then only
+          comparable inside this run.</p>
+      </details>
+      <button id="btn-run" class="primary big" disabled title="Start docking. You can keep using the window; the run continues in the background.">Run docking</button>
+      <button id="btn-add" class="big hidden" title="Dock the compounds above into the open run, with its prepared protein, box and settings">Add to the open run</button>
+      <div id="run-msg" class="msg"></div>
+    </section>
+  </aside>
+
+  <section class="workspace">
+    <div class="viewer-wrap">
+      <div id="viewer"></div>
+      <div id="viewer-caption" class="viewer-caption">Load a protein to see it here.</div>
+      <button id="btn-viewer-big" class="viewer-expand" title="Make the 3D view bigger or smaller">Enlarge</button>
+    </div>
+
+    <div id="results" class="card hidden">
+      <div class="results-head">
+        <div>
+          <h2 id="job-title">Results</h2>
+          <div id="job-step" class="muted small"></div>
+        </div>
+        <div class="actions">
+          <a id="btn-report" class="button primary" target="_blank" title="Open the full HTML report: validation, ranked table, interactions and methods. Print it to PDF from your browser.">Open report</a>
+          <a id="btn-zip" class="button" title="Download a zip with the prepared receptor, every pose (SDF and PDBQT), complex files for PyMOL or Chimera, the CSV and the report.">Download all files</a>
+          <a id="btn-csv" class="button" title="Download the results table as a spreadsheet file (opens in Excel).">CSV</a>
+          <button id="btn-same" title="Start a new run with this protein, binding site and settings. The compounds are cleared so you can add different ones.">New run, same setup</button>
+          <button id="btn-stop" class="danger hidden" title="Stop this run. Compounds already docked are kept and the report is written for them.">Stop the run</button>
+        </div>
+      </div>
+      <div class="progress" title="How much of the run is finished"><div id="progress-bar"></div></div>
+      <div id="job-timing" class="muted small"></div>
+      <div id="validation"></div>
+      <table class="results-table">
+        <thead><tr><th>#</th><th></th><th data-sort="name" title="Click to sort by name">Compound</th><th class="r" data-sort="best" title="Vina affinity in kcal/mol. More negative is a better predicted binder. Click to sort.">Affinity<br><small>kcal/mol</small></th><th class="r" data-sort="le" title="Ligand efficiency: binding per heavy atom. Helps compare small and large compounds. Click to sort.">LE</th><th class="r" data-sort="mw" title="Molecular weight. Click to sort.">MW</th><th class="r" data-sort="logp" title="Calculated logP (greasiness). Click to sort.">cLogP</th><th>Key interactions</th></tr></thead>
+        <tbody id="results-body"></tbody>
+      </table>
+      <div id="pose-panel" class="pose-panel hidden">
+        <div class="pose-head">
+          <b id="pose-title"></b>
+          <label>Pose <select id="pose-select"></select></label>
+        </div>
+        <div id="pose-interactions"></div>
+      </div>
+      <details class="log"><summary>Log</summary><pre id="job-log"></pre></details>
+    </div>
+  </section>
+</main>
+
+<!-- Ketcher drawing dialog -->
+<dialog id="draw-dialog">
+  <div class="dlg-head">
+    <b>Draw a compound</b>
+    <input id="draw-name" placeholder="Name (optional)">
+    <button id="btn-draw-add" class="primary">Add to list</button>
+    <button id="btn-draw-close">Close</button>
+  </div>
+  <iframe id="ketcher" title="Ketcher structure editor"></iframe>
+  <div id="draw-msg" class="msg"></div>
+</dialog>
+
+<script src="vendor/molstar/molstar.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
