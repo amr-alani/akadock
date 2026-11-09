@@ -229,8 +229,20 @@ yourself with `python mcp\build_bundle.py`). Claude Desktop shows what the conne
 folder AKADock is in - the usual one is filled in already - and installs it. Nothing to type, nothing
 to edit.
 
-**Claude Code:** run `python mcp\install_mcp.py` and use the command it prints. That script also
-registers the server with Claude Desktop by hand if you prefer it to the bundle; `--remove` undoes it.
+**Claude Code, or Claude on the web:** install the plugin, which brings the same connector plus a
+skill that tells Claude how to run a docking and how to report the verdict:
+
+```
+/plugin install akadock --marketplace amr-alani/akadock
+```
+
+or add the marketplace `amr-alani/akadock` under **Customize > Plugins > Add > Add marketplace**. The
+plugin finds your AKADock install by itself - the folder you installed into, or `AKADOCK_HOME` if you
+moved it. Its source is in `plugin/` in the GitHub repository. The connector runs a program on your
+computer, so it loads in Claude Code and in Cowork sessions on the desktop, not in web chat.
+
+**By hand:** `python mcp\install_mcp.py` registers the server with Claude Desktop without the bundle;
+`--remove` undoes it.
 
 The server starts
 the engine itself if it is not already running, and talks to the same `127.0.0.1:8801` API as the
