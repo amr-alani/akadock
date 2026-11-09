@@ -1,0 +1,16 @@
+# The download page is the docs/ folder - the same files GitHub Pages serves. There is no build
+# step: it is one HTML file and its screenshots.
+[build]
+  publish = "docs"
+  command = ""
+
+# The page is one document, so anything not found is that page rather than a Netlify 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
