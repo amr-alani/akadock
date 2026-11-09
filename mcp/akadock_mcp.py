@@ -24,9 +24,30 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-# Inside a Claude Desktop bundle this file sits outside the AKADock folder, so the installer
-# passes the real one in AKADOCK_HOME.
-ROOT = Path(os.environ.get("AKADOCK_HOME") or Path(__file__).resolve().parent.parent)
+def _find_akadock() -> Path:
+    """Where AKADock is installed. Run from inside the folder this is the parent directory, but a
+    Claude Desktop bundle or a plugin lives somewhere else entirely, so look the install up."""
+    here = Path(__file__).resolve().parent.parent
+    seen = [Path(os.environ["AKADOCK_HOME"])] if os.environ.get("AKADOCK_HOME") else []
+    seen.append(here)
+    try:                                                    # what the installer recorded
+        import winreg
+
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER,
+                            r"Software\Microsoft\Windows\CurrentVersion\Uninstall\AKADock") as k:
+            seen.append(Path(winreg.QueryValueEx(k, "InstallLocation")[0]))
+    except Exception:  # noqa: BLE001
+        pass
+    local = os.environ.get("LOCALAPPDATA")
+    if local:
+        seen.append(Path(local) / "Programs" / "AKADock")
+    for p in seen:
+        if (p / "run.py").exists():
+            return p
+    return seen[0]                                          # report the failure against what was asked for
+
+
+ROOT = _find_akadock()
 BASE = os.environ.get("AKADOCK_URL", "http://127.0.0.1:8801").rstrip("/")
 VERSION = "1.1"
 PROTOCOL = "2025-06-18"

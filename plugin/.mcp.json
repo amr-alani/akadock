@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "akadock": {
+      "command": "cmd",
+      "args": ["/c", "${CLAUDE_PLUGIN_ROOT}\\server\\akadock-mcp.bat"]
+    }
+  }
+}

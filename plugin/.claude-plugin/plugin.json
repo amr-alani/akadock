@@ -1,0 +1,14 @@
+{
+  "name": "akadock",
+  "displayName": "AKADock",
+  "version": "1.1.0",
+  "description": "Run molecular docking on your own computer with AutoDock Vina. Load a protein by PDB code, dock your compounds, and read ranked results that carry their own validation verdict. Needs AKADock installed on this machine.",
+  "author": {
+    "name": "Amr Alani",
+    "url": "https://github.com/amr-alani/akadock"
+  },
+  "homepage": "https://amr-alani.github.io/akadock/",
+  "repository": "https://github.com/amr-alani/akadock",
+  "license": "GPL-2.0",
+  "keywords": ["docking", "chemistry", "autodock-vina", "drug-discovery", "science"]
+}

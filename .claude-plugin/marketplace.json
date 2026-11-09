@@ -1,0 +1,23 @@
+﻿{
+  "name": "akadock",
+  "owner": {
+    "name": "Amr Alani",
+    "url": "https://github.com/amr-alani"
+  },
+  "metadata": {
+    "description": "Molecular docking on your own computer, with AutoDock Vina.",
+    "version": "1.1.0"
+  },
+  "plugins": [
+    {
+      "name": "akadock",
+      "source": "./plugin",
+      "description": "Dock compounds into a protein with AutoDock Vina on this machine, and get results that carry their own validation verdict. Needs AKADock installed.",
+      "version": "1.1.0",
+      "author": { "name": "Amr Alani" },
+      "homepage": "https://amr-alani.github.io/akadock/",
+      "license": "GPL-2.0",
+      "keywords": ["docking", "chemistry", "autodock-vina", "drug-discovery", "science"]
+    }
+  ]
+}
