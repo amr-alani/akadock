@@ -16,8 +16,10 @@ In claude.ai or the desktop app: **Customize → Plugins → Add → Add marketp
 ## Use it
 
 Install [AKADock 1.1 or newer](https://amr-alani.github.io/akadock/) first — it is a free Windows
-program and carries its own Python, AutoDock Vina and chemistry libraries. The plugin finds it
-automatically, or set `AKADOCK_HOME` to the folder that holds `run.py`.
+program and carries its own Python, AutoDock Vina and chemistry libraries. The plugin finds it in
+the folder the installer uses, and starts it when you ask for a docking. If you keep AKADock
+somewhere else, either leave its window open or set `AKADOCK_HOME` to the folder that holds
+`run.py`; the plugin says so itself if it cannot find the program.
 
 Then ask for a run in words:
 
